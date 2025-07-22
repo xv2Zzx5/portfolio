@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@font-face {
+    font-family: "Ubuntu";
+    src: url("/fonts/Ubuntu-Light.ttf") format("truetype");
+    font-weight: 300;
+}
+@font-face {
+    font-family: "Ubuntu";
+    src: url("/fonts/Ubuntu-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "Ubuntu";
+    src: url("/fonts/Ubuntu-Medium.ttf") format("truetype");
+    font-weight: 500;
+}
+@font-face {
+    font-family: "IBMPlexMono";
+    src: url("/fonts/IBMPlexMono-Regular.ttf") format("truetype");
+    font-weight: 400;
+}
+@font-face {
+    font-family: "IBMPlexMono";
+    src: url("/fonts/IBMPlexMono-Medium.ttf") format("truetype");
+    font-weight: 500;
+}
+
+@theme {
+    --color-dark-100: #43454d;
+    --color-dark-200: #292f36;
+    --color-dark-300: #1a1e23;
+    --color-primary-100: #98faec;
+    --color-primary-200: #12f7d6;
+    --font-ubuntu: "Ubuntu", sans-serif;
+    --font-ibm: "IBMPlexMono", sans-serif;
+    --text-xs: 14px;
+    --text-sm: 16px;
+    --text-base: 20px;
+    --text-md: 24px;
+    --text-lg: 32px;
+    --text-xl: 48px;
+    --text-2xl: 64px;
+    --text-3xl: 117px;
+    --radius-lg: 32px;
+    --spacing-1: 0.7rem;
+    --spacing-2: 1.7rem;
+}
+@layer components {
+    .bg-text-u {
+        @apply font-ubuntu text-3xl;
+    }
+    .container {
+        @apply max-w-xl m-auto;
+    }
+    .active {
+        @apply bg-white;
+    }
+}
