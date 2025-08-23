@@ -42,6 +42,7 @@
     --text-2xl: 64px;
     --text-3xl: 117px;
     --radius-lg: 32px;
+    --spacing-0_75: 0.5rem;
     --spacing-1: 0.7rem;
     --spacing-2: 1.7rem;
 }
@@ -52,7 +53,36 @@
     .container {
         @apply max-w-xl m-auto;
     }
-    .active {
-        @apply bg-white;
+}
+@layer utilities {
+    .grid-header-layout {
+        grid-template-areas:
+            "card"
+            "info"
+            "stats";
     }
+    @media (min-width: 1024px) {
+        .grid-header-layout {
+            grid-template-areas:
+                "card card"
+                "info stats";
+        }
+    }
+    @media (min-width: 1280px) {
+        .grid-header-layout {
+            grid-template-areas: "card info stats";
+        }
+    }
+    .area-card {
+        grid-area: card;
+    }
+    .area-info {
+        grid-area: info;
+    }
+    .area-stats {
+        grid-area: stats;
+    }
+}
+body {
+    @apply bg-dark-200;
 }

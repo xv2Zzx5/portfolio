@@ -1,79 +1,24 @@
 import Typography from "../components/Typography";
 import Button from "../components/Button";
-import {
-    LuCode,
-    LuComputer,
-    LuGithub,
-    LuHouse,
-    LuInstagram,
-    LuRadio,
-    LuUser,
-} from "react-icons/lu";
+import { LuRadio } from "react-icons/lu";
 import Htmltext from "../components/Htmltext";
 import Nav from "../components/Nav";
-import type { Social, NavItem, SideBarItem } from "../types";
-import { FaDiscord } from "react-icons/fa";
+import { socials, navItems, sideBarItems } from "../constants";
 import Footer from "../components/Footer";
 import SideBar from "../components/SideBar";
 import { Element } from "react-scroll";
 import { Link } from "react-router-dom";
-const navItems: NavItem[] = [
-    {
-        label: "home",
-        to: "/",
-    },
-    {
-        label: "blogs",
-        to: "/blogs",
-    },
-];
-const socials: Social[] = [
-    {
-        label: "instagram",
-        icon: LuInstagram,
-        url: "",
-    },
-    {
-        label: "discord",
-        icon: FaDiscord,
-        url: "",
-    },
-    {
-        label: "github",
-        icon: LuGithub,
-        url: "",
-    },
-];
-const sideBarItems: SideBarItem[] = [
-    {
-        label: "home",
-        icon: LuHouse,
-    },
-    {
-        label: "about me",
-        icon: LuUser,
-    },
-    {
-        label: "skills",
-        icon: LuCode,
-    },
-    {
-        label: "works",
-        icon: LuComputer,
-    },
-];
+import Input from "../components/Input";
 
 const Ui = () => {
     return (
         <main className="bg-dark-300 min-h-screen">
             <div className="container">
-                <Link to="/">
-                    {" "}
-                    <Button variant="primary">
-                        <Element name="home">go home</Element>
-                    </Button>
-                </Link>
-
+                <Element name="home" className="max-w-fit">
+                    <Link to="/">
+                        <Button variant="primary">go home</Button>
+                    </Link>
+                </Element>
                 <section>
                     <fieldset className="flex flex-col items-start text-white border border-white p-2">
                         <legend>Typography</legend>
@@ -137,6 +82,28 @@ const Ui = () => {
                     <fieldset className="flex flex-col items-start gap-2 text-white border border-white p-2">
                         <legend>Side bar</legend>
                         <SideBar sideBarItems={sideBarItems} />
+                    </fieldset>
+                </section>
+                <section>
+                    <fieldset className="flex flex-col items-start gap-2 text-white border border-white p-2">
+                        <legend>form elements</legend>
+                        <Input />
+                        <Input placeholder="enter your name" />
+                        <Input
+                            placeholder="enter your email"
+                            label="your email"
+                        />
+                        <Input
+                            placeholder="enter your email"
+                            label="your email"
+                            required
+                        />
+                        <Input
+                            placeholder="enter your email"
+                            label="your email"
+                            required
+                            type="password"
+                        />
                     </fieldset>
                 </section>
             </div>

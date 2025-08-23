@@ -16,7 +16,7 @@ const classesMap = {
     "h1-U": `text-xl md:text-2xl  font-ubuntu font-normal`,
     "h2-U": `md:text-lg text-md font-ubuntu font-normal`,
     "bgText-U": `md:text-3xl text-2xl font-ubuntu font-normal`,
-    "button-U": `text-base font-ubuntu font-normal`,
+    "button-U": `text-sm font-ubuntu font-normal`,
     "para-U": `text-sm font-ubuntu font-light`,
     "label-U-L": `text-xs font-ubuntu font-light`,
     "label-U-M": `text-xs font-ubuntu font-medium`,
@@ -30,6 +30,7 @@ interface IProps extends React.HTMLAttributes<HTMLElement> {
     as?: React.ElementType;
     children?: React.ReactNode;
     className?: string;
+    [key: string]: any;
 }
 function getElementOfVariant(variant?: Variant): React.ElementType {
     if (variant?.startsWith("h1")) {

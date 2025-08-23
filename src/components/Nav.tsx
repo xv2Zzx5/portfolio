@@ -58,7 +58,7 @@ const Nav: React.FC<IProps> = ({
     return (
         <nav
             className={cn(
-                "bg-dark-200 p-1 flex justify-between items-center w-full relative",
+                "bg-dark-200 p-1 flex justify-between items-center w-full relative text-white border-b border-b-dark-100",
                 className
             )}
         >
