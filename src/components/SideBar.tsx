@@ -13,11 +13,11 @@ const SideBar = React.forwardRef<HTMLDivElement, IProps>(
             <aside
                 ref={ref}
                 className={cn(
-                    "border border-white rounded-4xl p-1 bg-dark-200 flex flex-row w-full justify-around md:justify-center   md:flex-col md:w-fit gap-1 top-full -translate-y-full",
+                    "border border-white rounded-4xl z-10 p-1 bg-dark-200 flex flex-row w-full justify-around md:justify-center   md:flex-col md:w-fit gap-1 top-full -translate-y-full",
                     position === "left"
-                        ? "fixed md:top-1/2 left-0"
+                        ? "fixed md:top-1/2 left-0 md:left-5"
                         : position === "right"
-                        ? "fixed md:top-1/2 right-0"
+                        ? "fixed md:top-1/2  right-0 md:right-5"
                         : "",
                     className
                 )}

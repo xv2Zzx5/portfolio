@@ -50,11 +50,11 @@
     .bg-text-u {
         @apply font-ubuntu text-3xl;
     }
-    .container {
-        @apply max-w-xl m-auto;
-    }
 }
 @layer utilities {
+    .container {
+        @apply m-auto px-1 max-w-7xl;
+    }
     .grid-header-layout {
         grid-template-areas:
             "card"

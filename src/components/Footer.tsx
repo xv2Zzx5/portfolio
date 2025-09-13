@@ -32,7 +32,7 @@ const Footer: React.FC<IProps> = ({ license, socials, author, className }) => {
                 className
             )}
         >
-            <div className="flex  justify-between grow gap-5 flex-col lg:flex-row items-center">
+            <div className="flex  justify-between grow gap-5 flex-col lg:flex-row items-center container">
                 {license && <Typography variant="para-U">{license}</Typography>}
                 <div className="flex gap-5 items-center justify-center text-center">
                     <Typography variant="para-U">privacy policy</Typography>
