@@ -2,28 +2,27 @@ import React, { useState } from "react";
 import Typography from "../components/Typography";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LuHouse } from "react-icons/lu";
-import axios from "axios";
+import api from "../api";
+
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    async function login() {
-        const response = await axios.post("http://localhost:8000/admin/login", {
-            username,
-            password,
-        });
-        console.log(response.data);
+    const navigate = useNavigate()
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+                    e.preventDefault();
+                    await api.login(username,password);
+                    navigate("/")
     }
+
+
     return (
         <div className="flex justify-center min-h-screen items-center">
             <form
                 className="flex flex-col gap-3"
-                onSubmit={(e) => {
-                    e.preventDefault();
-                    login();
-                }}
+                onSubmit={handleSubmit}
             >
                 <Typography
                     variant="h2-U"

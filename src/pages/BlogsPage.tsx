@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import postsApi from "../../api/Posts"
+import postsApi from "../api"
 
 const BlogsPage = () => {
     const [posts, setPosts] = useState([])
