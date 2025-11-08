@@ -74,13 +74,13 @@ const Nav: React.FC<IProps> = ({
                 </Button>
                 <div
                     className={cn(
-                        "absolute -bottom-full md:relative md:bottom-0",
+                        "fixed md:relative  -translate-x-[3rem] md:translate-x-0",
                         isSearchOpened ? "block" : "hidden"
                     )}
                 >
                     <input
                         placeholder="search"
-                        className="p-1 rounded-4xl border-none outline-none bg-white w-full pl-2 pr-8 text-dark-200 "
+                        className="p-0.75 rounded-4xl border-none outline-none bg-white w-full pl-2 pr-8 text-dark-200 "
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         onKeyDown={(e) =>

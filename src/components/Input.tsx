@@ -30,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, IProps>(
                         {required && "*"}
                     </Typography>
                 )}
-                <div className="relative">
+                <div className="relative w-fit">
                     <input
                         {...props}
                         required={required}
@@ -38,15 +38,16 @@ const Input = React.forwardRef<HTMLInputElement, IProps>(
                         type={currentType}
                         className={cn(
                             className,
-                            "outline-none border border-transparent border-b-primary-100 p-3 pr-8 font-ubuntu text-sm font-light placeholder:text-white/80 focus:border-primary-200 duration-300"
+                            "text-white outline-none border border-transparent border-b-primary-100 p-3 pr-8 font-ubuntu text-sm font-light placeholder:text-white/80 focus:border-primary-200 duration-300"
                         )}
                         ref={ref}
                     />
                     {type === "password" && (
                         <Button
-                            className="absolute top-1/2 right-1 -translate-y-1/2 "
+                            className="absolute top-1/2 right-1 -translate-y-1/2 text-primary-200"
                             variant="ghost"
                             onClick={toggleTypePassword}
+                            type="button"
                         >
                             {currentType === "password" ? (
                                 <LuEyeClosed />
