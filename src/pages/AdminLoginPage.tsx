@@ -5,16 +5,19 @@ import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { LuHouse } from "react-icons/lu";
 import api from "../api";
+import useAuth from "../context/auth";
 
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const navigate = useNavigate()
+    const auth = useAuth()
     const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
-                    e.preventDefault();
-                    await api.login(username,password);
-                    navigate("/")
+        e.preventDefault();
+        const data = await api.login(username,password);
+        auth.login(username,data.token)
+        navigate("/")
     }
 
 

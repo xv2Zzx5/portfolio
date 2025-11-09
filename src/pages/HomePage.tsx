@@ -20,6 +20,7 @@ import { FaSuitcase } from "react-icons/fa";
 
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import useAuth from "../context/auth";
 
 gsap.registerPlugin(ScrambleTextPlugin, ScrollTrigger);
 
@@ -29,6 +30,7 @@ const HomePage = () => {
     const infoRef = useRef<HTMLDivElement | null>(null);
 
     const [user] = useState<UserInfo>(userInfo);
+    const auth = useAuth()
 
     useEffect(() => {
         // Навбар
@@ -106,6 +108,9 @@ const HomePage = () => {
 
             {/* Header */}
             <header className="relative overflow-hidden">
+                <div>
+                    <p>hi, {auth.username}</p>
+                </div>
                 <div className="container grid grid-header-layout text-white gap-10 py-10">
                     {/* User Card */}
                     <div className="area-card ">
