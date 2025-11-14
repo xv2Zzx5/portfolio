@@ -23,7 +23,7 @@ const Button: React.FC<IProps> = ({
     as,
     children,
     className,
-    icon: Icon,
+    icon,
     ...props
 }) => {
     const Component = as || "button";
@@ -44,7 +44,7 @@ const Button: React.FC<IProps> = ({
             )}
         >
             {render}
-            {Icon && <span>{Icon} </span>}
+            {icon && <span>{icon} </span>}
         </Component>
     );
 };

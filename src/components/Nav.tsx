@@ -7,6 +7,7 @@ import { cn } from "../libs";
 import { useMediaQuery } from "react-responsive";
 import Button from "./Button";
 import type { Social, NavItem } from "../types";
+import useAuth from "../context/auth";
 
 interface IProps {
     socials: Social[];
@@ -25,6 +26,7 @@ const Nav: React.FC<IProps> = ({
     const isTablet = useMediaQuery({ maxWidth: 640 });
     const [isSearchOpened, setIsSearchOpened] = useState<boolean>(!isTablet);
     const [search, setSearch] = useState<string>("");
+    const auth = useAuth();
     const navbar = navItems.map((navitem) => (
         <li key={navitem.to}>
             <Typography variant="para-M">
@@ -95,7 +97,17 @@ const Nav: React.FC<IProps> = ({
                         <LuSearch className="text-md" />
                     </Button>
                 </div>
-                <ul className="sm:flex gap-2 hidden ">{sn}</ul>
+                <ul className="sm:flex gap-2 hidden items-center">
+                    {sn}
+                    {auth.username && (
+                        <li className="flex gap-1 items-center">
+                            <p>hi, {auth.username}</p>
+                            <Button variant="primary" onClick={auth.logout}>
+                                logout
+                            </Button>
+                        </li>
+                    )}
+                </ul>
             </div>
         </nav>
     );

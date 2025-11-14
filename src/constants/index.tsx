@@ -56,7 +56,7 @@ export const sideBarItems: SideBarItem[] = [
 export const userInfo = {
     name: "Andrey",
     position: "Front-end Developer",
-    email: "ibraimov0409@gmail.com",
+    email: "psibladestrinke@gmail.com",
     location: "Samara, Russia",
     workingStyle: "Freelance/Fulltime",
     stack: [
