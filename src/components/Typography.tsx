@@ -25,13 +25,11 @@ const classesMap = {
     "para-M": `text-sm font-ibm font-normal`,
     "code-M": `text-xs font-ibm font-normal`,
 } satisfies Record<Variant, string>;
-interface IProps extends React.HTMLAttributes<HTMLElement> {
+type IProps = {
     variant?: Variant;
-    as?: React.ElementType;
     children?: React.ReactNode;
     className?: string;
-    [key: string]: any;
-}
+};
 function getElementOfVariant(variant?: Variant): React.ElementType {
     if (variant?.startsWith("h1")) {
         return "h1";
@@ -47,12 +45,11 @@ function getElementOfVariant(variant?: Variant): React.ElementType {
 }
 const Typography: React.FC<IProps> = ({
     variant,
-    as,
     children,
     className,
     ...props
 }) => {
-    const Component = as || getElementOfVariant(variant);
+    const Component = getElementOfVariant(variant);
     const classes = variant ? classesMap[variant] : "";
     return (
         <Component {...props} className={cn(classes, className)}>

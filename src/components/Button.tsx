@@ -1,5 +1,4 @@
 import React from "react";
-
 import { cn } from "../libs";
 import Typography from "./Typography";
 type Variant = "primary" | "white" | "stroke" | "ghost";
@@ -10,13 +9,13 @@ const classesMap = {
     stroke: `bg-dark-200 text-white border-2 border-primary-200 active:scale-105 hover:-translate-y-0.5 transition-all px-1 py-0.75`,
     ghost: `bg-transparent border-none w-fit`,
 } satisfies Record<Variant, string>;
-interface IProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+type IProps<T extends React.ElementType = "button"> = {
     variant?: Variant;
-    as?: React.ElementType;
+    as?: T;
     children?: React.ReactNode;
     className?: string;
     icon?: React.ReactNode;
-}
+} & React.ComponentPropsWithoutRef<T>;
 
 const Button: React.FC<IProps> = ({
     variant,
