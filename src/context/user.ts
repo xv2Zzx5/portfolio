@@ -1,4 +1,3 @@
-import type { IconType } from "react-icons";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import type { UserInfo } from "../types";
