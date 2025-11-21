@@ -25,31 +25,33 @@ const classesMap = {
     "para-M": `text-sm font-ibm font-normal`,
     "code-M": `text-xs font-ibm font-normal`,
 } satisfies Record<Variant, string>;
-type IProps = {
+type IProps<T extends React.ElementType> = {
     variant?: Variant;
     children?: React.ReactNode;
     className?: string;
-};
-function getElementOfVariant(variant?: Variant): React.ElementType {
-    if (variant?.startsWith("h1")) {
-        return "h1";
-    } else if (variant?.startsWith("h2")) {
-        return "h2";
-    } else if (variant?.startsWith("label")) {
-        return "label";
-    } else if (variant?.startsWith("button")) {
-        return "span";
-    } else {
-        return "p";
-    }
-}
-const Typography: React.FC<IProps> = ({
+    as?: T;
+} & React.ComponentPropsWithoutRef<T>;
+
+// function getElementOfVariant(variant?: Variant): React.ElementType {
+//     if (variant?.startsWith("h1")) {
+//         return "h1";
+//     } else if (variant?.startsWith("h2")) {
+//         return "h2";
+//     } else if (variant?.startsWith("label")) {
+//         return "label";
+//     } else if (variant?.startsWith("button")) {
+//         return "span";
+//     }
+//     return "p";
+// }
+const Typography = <T extends React.ElementType>({
     variant,
     children,
     className,
+    as,
     ...props
-}) => {
-    const Component = getElementOfVariant(variant);
+}: IProps<T>) => {
+    const Component = as || "p";
     const classes = variant ? classesMap[variant] : "";
     return (
         <Component {...props} className={cn(classes, className)}>

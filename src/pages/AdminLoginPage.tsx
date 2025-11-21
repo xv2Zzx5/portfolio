@@ -7,26 +7,21 @@ import { LuHouse } from "react-icons/lu";
 import api from "../api";
 import useAuth from "../context/auth";
 
-
 const AdminLoginPage = () => {
     const [username, setUsername] = useState<string>("");
     const [password, setPassword] = useState<string>("");
-    const navigate = useNavigate()
-    const auth = useAuth()
-    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
+    const navigate = useNavigate();
+    const auth = useAuth();
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const data = await api.login(username,password);
-        auth.login(username,data.token)
-        navigate("/")
-    }
-
+        const data = await api.login(username, password);
+        auth.login(username, data.token);
+        navigate("/");
+    };
 
     return (
         <div className="flex justify-center min-h-screen items-center">
-            <form
-                className="flex flex-col gap-3"
-                onSubmit={handleSubmit}
-            >
+            <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
                 <Typography
                     variant="h2-U"
                     className="text-white flex gap-2 items-center"
