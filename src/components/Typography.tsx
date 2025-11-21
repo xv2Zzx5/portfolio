@@ -54,6 +54,7 @@ const Typography = <T extends React.ElementType>({
     const Component = as || "p";
     const classes = variant ? classesMap[variant] : "";
     return (
+        //@ts-ignore
         <Component {...props} className={cn(classes, className)}>
             {children}
         </Component>
