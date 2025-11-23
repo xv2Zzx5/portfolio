@@ -4,8 +4,9 @@ import { cn } from "../libs";
 import { Link } from "react-scroll";
 import useAuth from "../context/auth";
 import { useMediaQuery } from "react-responsive";
-import { LuLogOut } from "react-icons/lu";
+import { LuDoorOpen, LuLogOut } from "react-icons/lu";
 import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 interface IProps {
     position?: "left" | "right";
     sideBarItems: SideBarItem[];
@@ -15,6 +16,7 @@ const SideBar = React.forwardRef<HTMLDivElement, IProps>(
     ({ position, sideBarItems, className }, ref) => {
         const auth = useAuth();
         const isTablet = useMediaQuery({ maxWidth: 640 });
+        const navigate = useNavigate();
         return (
             <aside
                 ref={ref}
@@ -45,22 +47,31 @@ const SideBar = React.forwardRef<HTMLDivElement, IProps>(
                             >
                                 <Icon className="size-5" />
                             </Link>
-                            <span className="absolute block p-0.75 bg-white text-dark-200 rounded-md min-w-fit text-center -right-[102%] top-1/2 translate-x-full opacity-0 -translate-y-1/3  peer-hover:opacity-100 peer-hover:-translate-y-1/2 duration-100 ">
+                            <span className="absolute sm:block hidden p-0.75 bg-white text-dark-200 rounded-md min-w-fit text-center -right-[102%] top-1/2 translate-x-full opacity-0 -translate-y-1/3  peer-hover:opacity-100 peer-hover:-translate-y-1/2 duration-100 ">
                                 {label}
                             </span>
                         </div>
                     ))}
-                {isTablet && (
-                    <Button
-                        variant="primary"
-                        className="p-0.75"
-                        icon={<LuLogOut />}
-                        onClick={() => {
-                            auth.logout();
-                            console.log("LOGOUT");
-                        }}
-                    />
-                )}
+                {isTablet &&
+                    (auth.token ? (
+                        <Button
+                            variant="primary"
+                            className="p-0.75"
+                            icon={<LuLogOut />}
+                            onClick={() => {
+                                auth.logout();
+                            }}
+                        />
+                    ) : (
+                        <Button
+                            variant="primary"
+                            className="p-0.75"
+                            icon={<LuDoorOpen />}
+                            onClick={() => {
+                                navigate("/admin/login");
+                            }}
+                        />
+                    ))}
             </aside>
         );
     }

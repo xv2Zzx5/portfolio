@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Typography from "./Typography";
 import { LuSearch, LuX } from "react-icons/lu";
 import { cn } from "../libs";
@@ -27,6 +27,7 @@ const Nav: React.FC<IProps> = ({
     const [isSearchOpened, setIsSearchOpened] = useState<boolean>(!isTablet);
     const [search, setSearch] = useState<string>("");
     const auth = useAuth();
+    const navigate = useNavigate();
     const navbar = navItems.map((navitem) => (
         <li key={navitem.to}>
             <Typography variant="para-M">
@@ -99,11 +100,22 @@ const Nav: React.FC<IProps> = ({
                 </div>
                 <ul className="sm:flex gap-2 hidden items-center">
                     {sn}
-                    {auth.username && (
+                    {auth.token ? (
                         <li className="flex gap-1 items-center">
                             <p>hi, {auth.username}</p>
                             <Button variant="primary" onClick={auth.logout}>
                                 logout
+                            </Button>
+                        </li>
+                    ) : (
+                        <li className="flex gap-1 items-center">
+                            <Button
+                                variant="primary"
+                                onClick={() => {
+                                    navigate("/admin/login");
+                                }}
+                            >
+                                login
                             </Button>
                         </li>
                     )}

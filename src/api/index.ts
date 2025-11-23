@@ -4,7 +4,7 @@ class API {
     private client:AxiosInstance
     constructor(){
         this.client = axios.create({
-            baseURL: "https://portfolioapi.vercel.app",//"http://localhost:8000",
+            baseURL: import.meta.env.VITE_API_URL,
             headers:{
                 "Content-Type":"application/json"
             }
