@@ -144,11 +144,11 @@ const HomePage = () => {
                             <div className="grid grid-cols-2 gap-1">
                                 {user.stack.map((item) => (
                                     <Typography
-                                        key={item.name}
+                                        key={item}
                                         variant="code-M"
                                         className="stack-item w-fit bg-primary-200 rounded-xl px-1 py-0.5 text-black uppercase"
                                     >
-                                        {item.name}
+                                        {item}
                                     </Typography>
                                 ))}
                             </div>

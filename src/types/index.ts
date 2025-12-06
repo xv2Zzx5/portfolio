@@ -18,11 +18,7 @@ export type UserInfo = {
     email: string;
     location: string;
     workingStyle: string;
-    stack: {
-        name: string;
-        icon: IconType;
-        color: string;
-    }[];
+    stack: string[]
     cv: string;
     description: string;
     about: string;

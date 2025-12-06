@@ -7,7 +7,7 @@ import {
     LuUser,
 } from "react-icons/lu";
 import type { Social, NavItem, SideBarItem } from "../types";
-import { FaCss3Alt, FaDiscord, FaHtml5, FaJs, FaReact } from "react-icons/fa";
+import { FaDiscord } from "react-icons/fa";
 export const navItems: NavItem[] = [
     {
         label: "Home",
@@ -59,28 +59,7 @@ export const userInfo = {
     email: "psibladestrinke@gmail.com",
     location: "Samara, Russia",
     workingStyle: "Freelance/Fulltime",
-    stack: [
-        {
-            name: "Html",
-            icon: FaHtml5,
-            color: "#E5RF26",
-        },
-        {
-            name: "Css",
-            icon: FaCss3Alt,
-            color: "#0C73B8",
-        },
-        {
-            name: "JavaScript",
-            icon: FaJs,
-            color: "#E7A020",
-        },
-        {
-            name: "React",
-            icon: FaReact,
-            color: "#28A9E0",
-        },
-    ],
+    stack: ["Html", "Css", "Javascript", "React"],
     cv: "text.pdf",
     description:
         "I help business to grow by crafting amazing web experiences. If you’re looking for a developer that likes to get stuff done, contact me",

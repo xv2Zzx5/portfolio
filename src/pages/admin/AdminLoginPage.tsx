@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Typography from "../components/Typography";
-import Input from "../components/Input";
-import Button from "../components/Button";
+import Typography from "../../components/Typography";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { LuHouse } from "react-icons/lu";
-import api from "../api";
-import useAuth from "../context/auth";
+import api from "../../api";
+import useAuth from "../../context/auth";
 
 const AdminLoginPage = () => {
     const [username, setUsername] = useState<string>("");
