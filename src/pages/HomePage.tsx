@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Nav from "../components/Nav";
 import SideBar from "../components/SideBar";
 import Footer from "../components/Footer";
@@ -7,8 +7,7 @@ import Button from "../components/Button";
 import Htmltext from "../components/Htmltext";
 import Model from "../components/Model";
 
-import { navItems, sideBarItems, socials, userInfo } from "../constants";
-import type { UserInfo } from "../types";
+import { navItems, sideBarItems, socials } from "../constants";
 
 import { gsap } from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
@@ -20,6 +19,9 @@ import { FaSuitcase } from "react-icons/fa";
 
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import api from "../api";
+import useUser from "../context/user";
+import { userAnimation } from "../animations";
 
 gsap.registerPlugin(ScrambleTextPlugin, ScrollTrigger);
 
@@ -28,7 +30,18 @@ const HomePage = () => {
     const sideBarRef = useRef<HTMLDivElement | null>(null);
     const infoRef = useRef<HTMLDivElement | null>(null);
 
-    const [user] = useState<UserInfo>(userInfo);
+    const { user, setUser, isLoading, isError, setLoading, setError } =
+        useUser();
+
+    useEffect(() => {
+        setLoading(true);
+        api.getUser()
+            .then((data) => {
+                setUser(data);
+            })
+            .catch(() => setError(true))
+            .finally(() => setLoading(false));
+    }, []);
 
     useEffect(() => {
         // Навбар
@@ -40,49 +53,12 @@ const HomePage = () => {
             { xPercent: -100, opacity: 0 },
             { xPercent: 0, opacity: 1 }
         );
+    }, []);
 
-        // Info & stack анимации
-        const tl = gsap.timeline();
-        tl.fromTo(
-            ".info-item",
-            { opacity: 0, y: 30 },
-            {
-                opacity: 1,
-                y: 0,
-                duration: 1,
-                ease: "power2.in",
-                stagger: 0.3,
-            }
-        );
-        tl.fromTo(
-            ".stack-item",
-            { opacity: 0, x: 30 },
-            {
-                opacity: 1,
-                x: 0,
-                duration: 1,
-                ease: "circ.in",
-                stagger: 0.3,
-            }
-        );
-
-        // Scramble-анимации
-        const animateScramble = (selector: string, text: string) => {
-            gsap.to(selector, {
-                duration: 1,
-                scrambleText: text,
-                scrollTrigger: {
-                    trigger: infoRef.current,
-                    start: "top 60%",
-                    toggleActions: "play none none reverse",
-                },
-            });
-        };
-
-        animateScramble(".scramble-hi", "Hi");
-        animateScramble(".scramble-Iam", "I am ");
-        animateScramble(".scramble-name", user.name);
-        animateScramble(".scramble-position", user.position);
+    useEffect(() => {
+        if (user !== null) {
+            userAnimation(user, infoRef);
+        }
     }, [user]);
 
     return (
@@ -107,42 +83,48 @@ const HomePage = () => {
             {/* Header */}
             <header className="relative overflow-hidden">
                 <div className="container grid grid-header-layout text-white gap-10 py-10">
+                    {!isLoading ? (
+                        <p>Loading...</p>
+                    ) : isError ? (
+                        <p>Error!</p>
+                    ) : null}
+
                     {/* User Card */}
                     <div className="area-card ">
                         <div className="border-4 m-auto border-white rounded-tl-[100px] rounded-br-[100px] p-8 flex flex-col items-center gap-5 max-w-80 shadow-[-5px_-5px_2px_var(--color-primary-200)]">
                             <div className="border-2 border-primary-200 rounded-full size-24 bg-primary-100 text-white p-5">
                                 <LuCodeXml className="size-full" />
                             </div>
-                            <Typography variant="h2-M">{user.name}</Typography>
+                            <Typography variant="h2-M">{user?.name}</Typography>
                             <Typography variant="code-M">
-                                {user.position}
+                                {user?.position}
                             </Typography>
 
                             <ul>
                                 <li className="flex gap-1 info-item mt-1">
                                     <LuMail />
                                     <Typography variant="code-M">
-                                        <a href={`mailto:${user.email}`}>
-                                            {user.email}
+                                        <a href={`mailto:${user?.email}`}>
+                                            {user?.email}
                                         </a>
                                     </Typography>
                                 </li>
                                 <li className="flex gap-1 info-item mt-1">
                                     <BsGeoAltFill />
                                     <Typography variant="code-M">
-                                        {user.location}
+                                        {user?.location}
                                     </Typography>
                                 </li>
                                 <li className="flex gap-1 info-item mt-1">
                                     <FaSuitcase />
                                     <Typography variant="code-M">
-                                        {user.workingStyle}
+                                        {user?.workingStyle}
                                     </Typography>
                                 </li>
                             </ul>
 
                             <div className="grid grid-cols-2 gap-1">
-                                {user.stack.map((item) => (
+                                {user?.stack?.map((item) => (
                                     <Typography
                                         key={item}
                                         variant="code-M"
@@ -175,24 +157,23 @@ const HomePage = () => {
                                 className="inline scramble-name text-primary-200 ml-4"
                                 variant="h1-U"
                             >
-                                {user.name},
+                                {user?.name},
                             </Typography>
                             <Typography
                                 className="scramble-position"
                                 variant="h1-U"
                             >
-                                {user.position}
+                                {user?.position}
                             </Typography>
                         </Htmltext>
                         <Htmltext element="p">
                             <Typography variant="para-M">
-                                {user.description}
+                                {user?.description}
                             </Typography>
                         </Htmltext>
                     </div>
-
                     {/* Background Canvas */}
-                    <div className="area-stats absolute w-full h-full top-0 left-0 -z-10 bg-black opacity-10">
+                    {/* <div className="area-stats absolute w-full h-full top-0 left-0 -z-10 bg-black opacity-10">
                         <Canvas camera={{ position: [0, 1, 5] }}>
                             <ambientLight intensity={0.2} />
                             <directionalLight
@@ -207,7 +188,7 @@ const HomePage = () => {
                             />
                             <Model scale={0.5} position={[0, 0.5, 0]} />
                         </Canvas>
-                    </div>
+                    </div> */}
                 </div>
             </header>
 

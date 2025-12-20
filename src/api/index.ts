@@ -27,6 +27,13 @@ class API {
         
         return response.data
     }
+    async getUser(){
+                const response = await this.client.request({
+            url:"/user/1",
+            method:"GET"
+        })
+        return response.data
+    }
 }
 const api = new API()
 export default api

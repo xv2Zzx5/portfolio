@@ -3,26 +3,24 @@ import { persist } from "zustand/middleware";
 import type { UserInfo } from "../types";
 
 interface UserState {
-    userInfo: UserInfo;
+    user: UserInfo | null;
     setUser: (user: UserInfo) => void;
+    isLoading:boolean;
+    isError:boolean;
+    setLoading: (isLoading:boolean) => void,
+    setError: (isError:boolean) => void,
 }
 const useUser = create<UserState>()(
     persist(
         (set) => ({
-            userInfo: {
-                name: "",
-                position: "",
-                email: "",
-                location: "",
-                workingStyle: "",
-                stack: [],
-                cv: "",
-                description: "",
-                about: "",
-            },
-            setUser: (userInfo) => set({ userInfo }),
+            user: null,
+            setUser: (user) => set({ user }),
+            isLoading:true,
+            isError:false,
+            setLoading:(isLoading) => set({isLoading}),
+            setError:(isError) => set({isError})
         }),
-        { name: "user", partialize: (state) => ({ userInfo: state.userInfo }) }
+        { name: "user", partialize: (state) => ({ userInfo: state.user }) }
     )
 );
 
