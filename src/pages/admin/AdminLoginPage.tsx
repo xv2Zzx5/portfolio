@@ -16,7 +16,7 @@ const AdminLoginPage = () => {
         e.preventDefault();
         const data = await api.login(username, password);
         auth.login(username, data.token);
-        navigate("/");
+        navigate("/admin");
     };
 
     return (

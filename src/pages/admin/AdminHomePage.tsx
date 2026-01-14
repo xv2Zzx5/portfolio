@@ -6,7 +6,7 @@ import Typography from "../../components/Typography";
 import Button from "../../components/Button";
 import Htmltext from "../../components/Htmltext";
 
-import { navItems, sideBarItems, socials, userInfo } from "../../constants";
+import { navItems, sideBarItems, socials } from "../../constants";
 import type { UserInfo } from "../../types";
 
 import { LuCodeXml, LuMail, LuPlus, LuX } from "react-icons/lu";
@@ -15,36 +15,54 @@ import { FaSuitcase } from "react-icons/fa";
 import Input from "../../components/Input";
 import { toast } from "react-hot-toast";
 import Textarea from "../../components/Textarea";
+import useUser from "../../context/user";
+import api from "../../api";
+import useAuth from "../../context/auth";
 
 const AdminHomePage = () => {
-    const [user, setUser] = useState<UserInfo>(userInfo);
+    const { user, setUser } = useUser();
+    const { token } = useAuth();
     const [currentStack, setCurrentStack] = useState<string>("");
-    const [cvFile, setCvFile] = useState<File | null>();
     const changeUserField = <K extends keyof UserInfo>(
         key: K,
         value: UserInfo[K]
     ) => {
-        setUser({ ...user, [key]: value });
+        if (user) {
+            setUser({ ...user, [key]: value });
+        }
     };
     const addStack = () => {
         if (currentStack.trim().length == 0) {
             toast.error("Stack can't be empty");
             return;
         }
-        if (
-            user.stack.findIndex(
-                (i) => i.toLowerCase() == currentStack.toLowerCase()
-            ) !== -1
-        ) {
-            toast.error("This stack already exists");
-            return;
+
+        if (user) {
+            let stack;
+            if (!user.stack) {
+                stack = [currentStack];
+            } else {
+                if (
+                    user.stack.findIndex(
+                        (i) => i.toLowerCase() == currentStack.toLowerCase()
+                    ) !== -1
+                ) {
+                    toast.error("This stack already exists");
+                    return;
+                }
+                stack = [...user.stack, currentStack];
+            }
+            setUser({
+                ...user,
+                stack,
+            });
         }
-        setUser({
-            ...user,
-            stack: [...user.stack, currentStack],
-        });
     };
-    console.log(cvFile);
+    const handleSaveUser = async () => {
+        if (user && token) {
+            await api.putUser(user, token);
+        }
+    };
     return (
         <>
             {/* Navbar */}
@@ -71,7 +89,7 @@ const AdminHomePage = () => {
                             </div>
                             <Input
                                 className="w-full"
-                                value={user.name}
+                                value={user?.name}
                                 placeholder="Your name"
                                 onChange={(e) =>
                                     changeUserField("name", e.target.value)
@@ -79,7 +97,7 @@ const AdminHomePage = () => {
                             />
                             <Input
                                 className="w-full"
-                                value={user.position}
+                                value={user?.position}
                                 placeholder="Your position"
                                 onChange={(e) =>
                                     changeUserField("position", e.target.value)
@@ -91,7 +109,7 @@ const AdminHomePage = () => {
                                     <LuMail />
                                     <Input
                                         className="w-full"
-                                        value={user.email}
+                                        value={user?.email}
                                         placeholder="Your email"
                                         onChange={(e) =>
                                             changeUserField(
@@ -105,7 +123,7 @@ const AdminHomePage = () => {
                                     <BsGeoAltFill />
                                     <Input
                                         className="w-full"
-                                        value={user.location}
+                                        value={user?.location}
                                         placeholder="Your location"
                                         onChange={(e) =>
                                             changeUserField(
@@ -119,7 +137,7 @@ const AdminHomePage = () => {
                                     <FaSuitcase />
                                     <Input
                                         className="w-full"
-                                        value={user.workingStyle}
+                                        value={user?.workingStyle}
                                         placeholder="Your working style"
                                         onChange={(e) =>
                                             changeUserField(
@@ -147,7 +165,7 @@ const AdminHomePage = () => {
                             </div>
 
                             <div className="grid grid-cols-2 gap-1">
-                                {user.stack.map((item) => (
+                                {user?.stack?.map((item) => (
                                     <Typography
                                         key={item}
                                         variant="code-M"
@@ -172,8 +190,10 @@ const AdminHomePage = () => {
 
                             <Input
                                 className="max-w-60"
-                                type="file"
-                                onChange={(e) => setCvFile(e.target.files?.[0])}
+                                type="text"
+                                onChange={(e) =>
+                                    changeUserField("cv", e.target.value)
+                                }
                             />
                         </div>
                     </div>
@@ -194,19 +214,19 @@ const AdminHomePage = () => {
                                 className="inline scramble-name text-primary-200 ml-4"
                                 variant="h1-U"
                             >
-                                {user.name},
+                                {user?.name},
                             </Typography>
                             <Typography
                                 className="scramble-position"
                                 variant="h1-U"
                             >
-                                {user.position}
+                                {user?.position}
                             </Typography>
                         </Htmltext>
                         <Htmltext element="p">
                             <Textarea
                                 className="w-full"
-                                value={user.description}
+                                value={user?.description}
                                 placeholder="Your description"
                                 onChange={(e) =>
                                     changeUserField(
@@ -218,7 +238,11 @@ const AdminHomePage = () => {
                         </Htmltext>
                     </div>
                 </div>
-                <Button variant="primary" className="m-auto w-60">
+                <Button
+                    variant="primary"
+                    className="m-auto w-60"
+                    onClick={handleSaveUser}
+                >
                     Save
                 </Button>
             </header>

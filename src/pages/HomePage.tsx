@@ -34,16 +34,6 @@ const HomePage = () => {
         useUser();
 
     useEffect(() => {
-        setLoading(true);
-        api.getUser()
-            .then((data) => {
-                setUser(data);
-            })
-            .catch(() => setError(true))
-            .finally(() => setLoading(false));
-    }, []);
-
-    useEffect(() => {
         // Навбар
         gsap.fromTo(navRef?.current, { yPercent: -100 }, { yPercent: 0 });
 
@@ -135,7 +125,7 @@ const HomePage = () => {
                                 ))}
                             </div>
 
-                            <a href="/resume-sample.pdf" download>
+                            <a href={user?.cv} download>
                                 <Button variant="white">Download CV</Button>
                             </a>
                         </div>

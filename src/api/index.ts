@@ -1,5 +1,6 @@
 import axios from "axios"
 import type { AxiosInstance } from "axios"
+import type { UserInfo } from "../types"
 class API {
     private client:AxiosInstance
     constructor(){
@@ -32,6 +33,16 @@ class API {
             url:"/user/1",
             method:"GET"
         })
+        return response.data
+    }
+    async putUser(user:UserInfo,token:string){
+        const response = await this.client.request({
+            url:"/user/1",
+            method:"PUT",
+            data: user,
+            headers:{Authorization:"Bearer " + token}
+        })
+        console.log(response)
         return response.data
     }
 }

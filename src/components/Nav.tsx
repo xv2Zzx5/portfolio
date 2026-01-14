@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Typography from "./Typography";
 import { LuSearch, LuX } from "react-icons/lu";
 import { cn } from "../libs";
@@ -102,7 +102,7 @@ const Nav: React.FC<IProps> = ({
                     {sn}
                     {auth.token ? (
                         <li className="flex gap-1 items-center">
-                            <p>hi, {auth.username}</p>
+                            <Link to="/admin">hi, {auth.username}</Link>
                             <Button variant="primary" onClick={auth.logout}>
                                 logout
                             </Button>

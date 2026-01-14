@@ -20,7 +20,7 @@ const useUser = create<UserState>()(
             setLoading:(isLoading) => set({isLoading}),
             setError:(isError) => set({isError})
         }),
-        { name: "user", partialize: (state) => ({ userInfo: state.user }) }
+        { name: "user", partialize: (state) => ({ user: state.user }) }
     )
 );
 
