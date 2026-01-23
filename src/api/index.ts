@@ -29,7 +29,7 @@ class API {
         return response.data
     }
     async getUser(){
-                const response = await this.client.request({
+        const response = await this.client.request({
             url:"/user/1",
             method:"GET"
         })
@@ -42,7 +42,6 @@ class API {
             data: user,
             headers:{Authorization:"Bearer " + token}
         })
-        console.log(response)
         return response.data
     }
 }

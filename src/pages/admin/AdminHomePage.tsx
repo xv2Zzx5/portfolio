@@ -60,7 +60,7 @@ const AdminHomePage = () => {
     };
     const handleSaveUser = async () => {
         if (user && token) {
-            await api.putUser(user, token);
+            //await api.putUser(user, token);
         }
     };
     return (

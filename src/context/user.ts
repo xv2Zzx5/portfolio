@@ -11,7 +11,7 @@ interface UserState {
     setError: (isError:boolean) => void,
 }
 const useUser = create<UserState>()(
-    persist(
+    //persist(
         (set) => ({
             user: null,
             setUser: (user) => set({ user }),
@@ -20,8 +20,8 @@ const useUser = create<UserState>()(
             setLoading:(isLoading) => set({isLoading}),
             setError:(isError) => set({isError})
         }),
-        { name: "user", partialize: (state) => ({ user: state.user }) }
-    )
+        //{ name: "user", partialize: (state) => ({ user: state.user }) }
+    //)
 );
 
 export default useUser;

@@ -8,6 +8,7 @@ import AdminLoginPage from "./pages/admin/AdminLoginPage";
 import AdminHomePage from "./pages/admin/AdminHomePage";
 import useUser from "./context/user";
 import api from "./api";
+import { useQuery } from "@tanstack/react-query";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -31,18 +32,18 @@ const router = createBrowserRouter([
     },
 ]);
 const App = () => {
-    const { user, setUser, isLoading, isError, setLoading, setError } =
-        useUser();
-    useEffect(() => {
-        setLoading(true);
-        api.getUser()
-            .then((data) => {
-                console.log(data);
-                setUser(data);
-            })
-            .catch(() => setError(true))
-            .finally(() => setLoading(false));
-    }, []);
+    const { setUser } = useUser();
+    const { data, isLoading, error } = useQuery({
+        queryKey: ["user"],
+        queryFn: () => api.getUser(),
+    });
+    if (isLoading) {
+        return <p>Loading</p>;
+    }
+    if (error) {
+        return <p>{error.message}</p>;
+    }
+    console.log(data);
     return (
         <>
             {" "}
