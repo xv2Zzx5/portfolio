@@ -18,14 +18,30 @@ import Textarea from "../../components/Textarea";
 import useUser from "../../context/user";
 import api from "../../api";
 import useAuth from "../../context/auth";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const AdminHomePage = () => {
     const { user, setUser } = useUser();
+    const queryClient = useQueryClient();
     const { token } = useAuth();
+    const updateUserMutation = useMutation({
+        mutationFn: (updatedUser: UserInfo) =>
+            api.putUser(updatedUser, token || ""),
+        onSuccess: (savedUser) => {
+            console.log(savedUser);
+            queryClient.setQueryData(["user"], savedUser[0]);
+            setUser(savedUser[0]);
+            toast.success("data was successfully saved ");
+        },
+        onError: () => {
+            toast.error("failed to save user");
+        },
+    });
+
     const [currentStack, setCurrentStack] = useState<string>("");
     const changeUserField = <K extends keyof UserInfo>(
         key: K,
-        value: UserInfo[K]
+        value: UserInfo[K],
     ) => {
         if (user) {
             setUser({ ...user, [key]: value });
@@ -44,7 +60,7 @@ const AdminHomePage = () => {
             } else {
                 if (
                     user.stack.findIndex(
-                        (i) => i.toLowerCase() == currentStack.toLowerCase()
+                        (i) => i.toLowerCase() == currentStack.toLowerCase(),
                     ) !== -1
                 ) {
                     toast.error("This stack already exists");
@@ -60,7 +76,7 @@ const AdminHomePage = () => {
     };
     const handleSaveUser = async () => {
         if (user && token) {
-            //await api.putUser(user, token);
+            updateUserMutation.mutate(user);
         }
     };
     return (
@@ -114,7 +130,7 @@ const AdminHomePage = () => {
                                         onChange={(e) =>
                                             changeUserField(
                                                 "email",
-                                                e.target.value
+                                                e.target.value,
                                             )
                                         }
                                     />
@@ -128,7 +144,7 @@ const AdminHomePage = () => {
                                         onChange={(e) =>
                                             changeUserField(
                                                 "location",
-                                                e.target.value
+                                                e.target.value,
                                             )
                                         }
                                     />
@@ -142,7 +158,7 @@ const AdminHomePage = () => {
                                         onChange={(e) =>
                                             changeUserField(
                                                 "workingStyle",
-                                                e.target.value
+                                                e.target.value,
                                             )
                                         }
                                     />
@@ -179,7 +195,7 @@ const AdminHomePage = () => {
                                                 setUser({
                                                     ...user,
                                                     stack: user.stack.filter(
-                                                        (i) => i !== item
+                                                        (i) => i !== item,
                                                     ),
                                                 })
                                             }
@@ -231,7 +247,7 @@ const AdminHomePage = () => {
                                 onChange={(e) =>
                                     changeUserField(
                                         "description",
-                                        e.target.value
+                                        e.target.value,
                                     )
                                 }
                             />
