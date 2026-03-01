@@ -13,10 +13,6 @@ export const navItems: NavItem[] = [
         label: "Home",
         to: "/",
     },
-    {
-        label: "Blogs",
-        to: "/blogs",
-    },
 ];
 export const socials: Social[] = [
     {

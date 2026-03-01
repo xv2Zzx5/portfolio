@@ -22,6 +22,7 @@ import { OrbitControls } from "@react-three/drei";
 import api from "../api";
 import useUser from "../context/user";
 import { userAnimation } from "../animations";
+import Scrollable from "../components/Scrollable";
 
 gsap.registerPlugin(ScrambleTextPlugin, ScrollTrigger);
 
@@ -30,8 +31,7 @@ const HomePage = () => {
     const sideBarRef = useRef<HTMLDivElement | null>(null);
     const infoRef = useRef<HTMLDivElement | null>(null);
 
-    const { user, setUser, isLoading, isError, setLoading, setError } =
-        useUser();
+    const { user } = useUser();
 
     useEffect(() => {
         // Навбар
@@ -41,7 +41,7 @@ const HomePage = () => {
         gsap.fromTo(
             sideBarRef?.current,
             { xPercent: -100, opacity: 0 },
-            { xPercent: 0, opacity: 1 }
+            { xPercent: 0, opacity: 1 },
         );
     }, []);
 
@@ -73,12 +73,6 @@ const HomePage = () => {
             {/* Header */}
             <header className="relative overflow-hidden">
                 <div className="container grid grid-header-layout text-white gap-10 py-10">
-                    {!isLoading ? (
-                        <p>Loading...</p>
-                    ) : isError ? (
-                        <p>Error!</p>
-                    ) : null}
-
                     {/* User Card */}
                     <div className="area-card ">
                         <div className="border-4 m-auto border-white rounded-tl-[100px] rounded-br-[100px] p-8 flex flex-col items-center gap-5 max-w-80 shadow-[-5px_-5px_2px_var(--color-primary-200)]">
@@ -181,6 +175,12 @@ const HomePage = () => {
                     </div> */}
                 </div>
             </header>
+
+            <main>
+                <Scrollable className="about">
+                    <Typography>About me</Typography>
+                </Scrollable>
+            </main>
 
             {/* Footer */}
             <div className="container">

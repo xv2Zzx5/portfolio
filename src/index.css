@@ -86,3 +86,9 @@
 body {
     @apply bg-dark-200;
 }
+.about{
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    background-image: url("/aboutmebg.png");
+}

@@ -10,6 +10,7 @@ import useUser from "./context/user";
 import api from "./api";
 import { useQuery } from "@tanstack/react-query";
 import { userInfo } from "./constants";
+import Loader from "./components/Loader";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -19,10 +20,10 @@ const router = createBrowserRouter([
         path: "/ui",
         element: <Ui />,
     },
-    {
-        path: "/blogs",
-        element: <BlogsPage />,
-    },
+    // {
+    //     path: "/blogs",
+    //     element: <BlogsPage />,
+    // },
     {
         path: "/admin/login",
         element: <AdminLoginPage />,
@@ -51,15 +52,11 @@ const App = () => {
         if (data) {
             setUser(data);
         }
-        console.log(data);
     }, [data, isError]);
 
     if (isLoading) {
-        return <p>Loading</p>;
+        return <Loader />;
     }
-    // if (error) {
-    //     return <p>{error.message}</p>;
-    // }
     return (
         <>
             <Toaster />

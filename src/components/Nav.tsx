@@ -62,7 +62,7 @@ const Nav: React.FC<IProps> = ({
         <nav
             className={cn(
                 "bg-dark-200 p-1 flex justify-between items-center w-full relative text-white border-b border-b-dark-100",
-                className
+                className,
             )}
         >
             {logo}
@@ -75,7 +75,7 @@ const Nav: React.FC<IProps> = ({
                 >
                     {isSearchOpened ? <LuX /> : <LuSearch />}
                 </Button>
-                <div
+                {/* <div
                     className={cn(
                         "fixed md:relative  -translate-x-[3rem] md:translate-x-0",
                         isSearchOpened ? "block" : "hidden"
@@ -97,7 +97,7 @@ const Nav: React.FC<IProps> = ({
                     >
                         <LuSearch className="text-md" />
                     </Button>
-                </div>
+                </div> */}
                 <ul className="sm:flex gap-2 hidden items-center">
                     {sn}
                     {auth.token ? (
